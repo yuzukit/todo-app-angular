@@ -1,0 +1,22 @@
+<h2>Todo List</h2>
+<!-- <div>
+    <label for="new-todo">Hero name: </label>
+    <input id="new-todo" #heroName />
+  
+    (click) 入力値をadd()に渡したあと、入力をクリアする
+    <button type="button" class="add-button" (click)="add(heroName.value); heroName.value=''">
+      Add hero
+    </button>
+</div> -->
+<div>
+    <ul class="todos">
+        <li *ngFor="let todo of todos">
+        <!-- <a routerLink="/detail/{{hero.id}}"> -->
+            <span class="badge">{{todo.id}}</span> {{todo.title}}
+        <!-- </a> -->
+        <!-- <button type="button" class="delete" title="delete todo" (click)="delete(hero)">x</button> -->
+        </li>
+    </ul>
+</div>
+
+<!-- <app-hero-detail [hero]="selectedHero"></app-hero-detail> -->
