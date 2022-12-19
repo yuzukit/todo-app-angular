@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TodoCreateComponent } from './todo-create/todo-create.component';
 
 const routes: Routes = [
   { path: 'todo/list', component: TodoListComponent },

@@ -3,7 +3,8 @@ import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { ViewValueTodo } from './models/todo';
+import { ValueCreateTodo, ViewValueTodo } from './models/todo';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +55,14 @@ export class TodoService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService) { }
+
+  add(body: ValueCreateTodo): Observable<ValueCreateTodo> {
+    //console.log(JSON.stringify(body), `${this.baseUrl}/todo/save`);
+    return this.http.post<ValueCreateTodo>(`${this.baseUrl}/todo/save`, JSON.stringify(body), this.httpOptions)
+    .pipe(
+      tap(_ => window.location.href = 'http://localhost:4200/todo/list'),
+      catchError(this.handleError<ValueCreateTodo>('addTodo', body))
+    );
+  }
 
 }

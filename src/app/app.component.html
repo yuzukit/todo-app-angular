@@ -1,7 +1,7 @@
-<h1>{{title}}</h1>
-<nav>
-  <a routerLink="/todo/list">Todo List</a>
-  <a routerLink="/category/list">Category List</a>
-</nav>
+<mat-toolbar>
+  <a mat-button href="/"><span>{{title}}</span></a>
+  <a mat-button href="/todo/list">Todo List</a>
+  <a mat-button href="/category/list">Category List</a>
+</mat-toolbar>
 
 <router-outlet></router-outlet>

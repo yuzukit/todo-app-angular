@@ -10,9 +10,12 @@
 </div> -->
 <div>
     <ul class="todos">
-        <li *ngFor="let todo of todos">
+        <li *ngFor="let todo of todos" class="todo-list">
         <!-- <a routerLink="/detail/{{hero.id}}"> -->
-            <span class="badge">{{todo.id}}</span> {{todo.title}}
+            <mat-card>
+                <mat-card-header>{{todo.state}}</mat-card-header>
+                <mat-card-content>{{todo.title}}, {{todo.body}}, {{todo.category_name}}</mat-card-content>
+            </mat-card>
         <!-- </a> -->
         <!-- <button type="button" class="delete" title="delete todo" (click)="delete(hero)">x</button> -->
         </li>
@@ -20,3 +23,4 @@
 </div>
 
 <!-- <app-hero-detail [hero]="selectedHero"></app-hero-detail> -->
+<app-todo-create></app-todo-create>

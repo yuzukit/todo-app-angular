@@ -26,7 +26,6 @@ export class TodoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTodos();
-    // console.log("test")
   }
 
   // onSelect(hero: Hero): void {
