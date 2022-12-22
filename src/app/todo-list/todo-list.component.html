@@ -1,13 +1,5 @@
 <h2>Todo List</h2>
-<!-- <div>
-    <label for="new-todo">Hero name: </label>
-    <input id="new-todo" #heroName />
-  
-    (click) 入力値をadd()に渡したあと、入力をクリアする
-    <button type="button" class="add-button" (click)="add(heroName.value); heroName.value=''">
-      Add hero
-    </button>
-</div> -->
+
 <div>
     <ul class="todos">
         <li *ngFor="let todo of todos" class="todo-list">
@@ -15,6 +7,7 @@
             <mat-card>
                 <mat-card-header>{{todo.state}}</mat-card-header>
                 <mat-card-content>{{todo.title}}, {{todo.body}}, {{todo.category_name}}</mat-card-content>
+                <button type="button" class="delete" title="delete todo" (click)="deleteTodo(todo)">x</button>
             </mat-card>
         <!-- </a> -->
         <!-- <button type="button" class="delete" title="delete todo" (click)="delete(hero)">x</button> -->
@@ -22,5 +15,4 @@
     </ul>
 </div>
 
-<!-- <app-hero-detail [hero]="selectedHero"></app-hero-detail> -->
 <app-todo-create></app-todo-create>

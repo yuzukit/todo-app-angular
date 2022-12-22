@@ -65,4 +65,13 @@ export class TodoService {
     );
   }
 
+  deleteTodo(id: number): Observable<ViewValueTodo> {
+    return this.http.delete<ViewValueTodo>(`${this.baseUrl}/todo/delete/${id}`)
+    .pipe(
+      tap(_ => this.log(`deleted todo id=${id}`)),
+      catchError(this.handleError<ViewValueTodo>('deleteTodo'))
+    );
+  }
+  
+
 }

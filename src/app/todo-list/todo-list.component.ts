@@ -41,9 +41,9 @@ export class TodoListComponent implements OnInit {
   //     });
   // }
 
-  // delete(hero: Hero): void {
-  //   this.heroes = this.heroes.filter(h => h !== hero);
-  //   this.heroService.deleteHero(hero.id).subscribe();
-  // }
+  deleteTodo(todo: ViewValueTodo): void {
+    this.todos = this.todos.filter(t => t !== todo);
+    this.todoService.deleteTodo(todo.id).subscribe();
+  }
 
 }
