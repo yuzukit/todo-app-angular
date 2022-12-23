@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../message.service';
+import { ValueCreateCategory } from '../models/category';
 import { ViewValueTodo } from '../models/todo';
 import { TodoService } from '../todo.service';
 
@@ -28,22 +29,8 @@ export class TodoListComponent implements OnInit {
     this.getTodos();
   }
 
-  // onSelect(hero: Hero): void {
-  //   this.selectedHero = hero;
-  //   this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
-  // }
-  // add(name: string): void {
-  //   name = name.trim();
-  //   if (!name) { return; }
-  //   this.heroService.addHero({ name } as Hero)
-  //     .subscribe(hero => {
-  //       this.heroes.push(hero);
-  //     });
-  // }
-
   deleteTodo(todo: ViewValueTodo): void {
     this.todos = this.todos.filter(t => t !== todo);
     this.todoService.deleteTodo(todo.id).subscribe();
   }
-
 }

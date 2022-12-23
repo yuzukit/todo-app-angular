@@ -3,7 +3,7 @@ export interface ViewValueTodo { // 表示する内容
     title:          string,
     body:           string,
     state:          string,
-    category_name?: string,
+    category_name:  string,
     color?:         string
 }
 
@@ -12,4 +12,9 @@ export interface ValueCreateTodo { // Todoの登録や更新の内容
     title:       string,
     body:        string,
     state:       number
+}
+
+export interface States {
+    id:   number,
+    name: string
 }

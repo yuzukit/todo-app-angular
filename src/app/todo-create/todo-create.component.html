@@ -1,4 +1,5 @@
 <form [formGroup]="todoForm" (ngSubmit)="addTodo()">
+    <div class="add-form">
     <mat-form-field appearance="fill">
         <mat-label>タイトル</mat-label>
         <input matInput formControlName="title">
@@ -17,7 +18,7 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-
+    </div>
     <button mat-raised-button type="submit">追加</button>
 </form>
 

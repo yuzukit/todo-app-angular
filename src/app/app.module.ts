@@ -20,6 +20,7 @@ import { TodoCreateComponent } from './todo-create/todo-create.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
+import { TodoUpdateComponent } from './todo-update/todo-update.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {MatInputModule} from '@angular/material/input';
     CategoryListComponent,
     DashboardComponent,
     TodoCreateComponent,
+    TodoUpdateComponent,
   ],
   imports: [
     BrowserModule,

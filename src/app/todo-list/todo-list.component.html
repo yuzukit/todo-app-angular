@@ -8,6 +8,9 @@
                 <mat-card-header>{{todo.state}}</mat-card-header>
                 <mat-card-content>{{todo.title}}, {{todo.body}}, {{todo.category_name}}</mat-card-content>
                 <button type="button" class="delete" title="delete todo" (click)="deleteTodo(todo)">x</button>
+                <a href="/todo/edit/{{todo.id}}">
+                    <button type="button" class="update" title="update todo">編集</button>
+                </a>
             </mat-card>
         <!-- </a> -->
         <!-- <button type="button" class="delete" title="delete todo" (click)="delete(hero)">x</button> -->
