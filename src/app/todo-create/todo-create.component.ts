@@ -42,6 +42,9 @@ export class TodoCreateComponent implements OnInit {
   }
 
   addTodo(): void {
+    if (this.todoForm.invalid) {
+      return;
+    }
     this.todo = this.todoForm.value;
     this.todoService.add(this.todo).subscribe(response => {
       console.log(response)

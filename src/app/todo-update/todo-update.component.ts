@@ -73,6 +73,9 @@ export class TodoUpdateComponent {
   }
 
   save(): void {
+    if (this.todoForm.invalid) {
+      return;
+    }
     this.todo = this.todoForm.value;
     if (this.todo) {
       this.todoService.updateTodo(this.todo, Number(this.route.snapshot.paramMap.get('id')))
