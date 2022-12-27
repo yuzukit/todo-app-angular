@@ -4,35 +4,13 @@ import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { ViewValueCategory } from './models/category';
+import { Base } from './models/base';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class CategoryService {
-
-  private baseUrl = 'http://localhost:9000';
-
-  /**
-   * 失敗したHttp操作を処理します。
-   * アプリを持続させます。
-   *
-   * @param operation - 失敗した操作の名前
-   * @param result - observableな結果として返す任意の値
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: リモート上のロギング基盤にエラーを送信する
-      console.error(error); // かわりにconsoleに出力
-
-      // TODO: ユーザーへの開示のためにエラーの変換処理を改善する
-      this.log(`${operation} failed: ${error.message}`);
-
-      // 空の結果を返して、アプリを持続可能にする
-      return of(result as T);
-    };
-  }
+export class CategoryService extends Base {
 
   /** サーバーからTODOを取得する */
   getCategories(): Observable<ViewValueCategory[]> {
@@ -53,6 +31,8 @@ export class CategoryService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService) { 
+      super();
+    }
 
 }

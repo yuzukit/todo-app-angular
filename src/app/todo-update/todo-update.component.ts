@@ -7,18 +7,20 @@ import { Location } from '@angular/common';
 import { Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ViewValueCategory } from '../models/category';
+import { HasSubscription } from '../models/hasSubscription';
 
 @Component({
   selector: 'app-todo-update',
   templateUrl: './todo-update.component.html',
   styleUrls: ['./todo-update.component.scss']
 })
-export class TodoUpdateComponent {
+
+export class TodoUpdateComponent extends HasSubscription {
   // @Input() todo: ViewValueTodo;
-  todoForm:   FormGroup;
-  categories: ViewValueCategory[] = [];
-  states:     States[] = [];
-  todo:       ValueCreateTodo;
+  todoForm:      FormGroup;
+  categories:    ViewValueCategory[] = [];
+  states:        States[] = [];
+  todo:          ValueCreateTodo;
 
   constructor(
     private route:           ActivatedRoute,
@@ -26,13 +28,14 @@ export class TodoUpdateComponent {
     private categoryService: CategoryService,
     private location:        Location
   ) {
+    super();
     this.todoForm = new FormGroup({
       category_id:   new FormControl(null, Validators.required),
       title:         new FormControl(null, Validators.required),
       body:          new FormControl(null, Validators.required),
       state:         new FormControl(null, Validators.required)
     });
-    this.todo = this.todoForm.value
+    this.todo = this.todoForm.value;
   }
 
   ngOnInit(): void {
@@ -40,10 +43,14 @@ export class TodoUpdateComponent {
     this.getStates();
     this.getCategories();
   }
+
+  ngOnDestroy(): void {
+    this.onDestroy();
+  }
   
   getTodo(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.todoService.getTodo(id)
+    this.subscriptions.push(this.todoService.getTodo(id)
       .subscribe(todo => {
         this.todo = todo;
         this.todoForm.setValue({
@@ -52,20 +59,22 @@ export class TodoUpdateComponent {
           body:          this.todo.body,
           state:         this.todo.state
         });
-      });
+      }));
   }
 
   getCategories(): void {
+    this.subscriptions.push(
     this.categoryService.getCategories()
-      .subscribe(categories => this.categories = categories);
+      .subscribe(categories => this.categories = categories));
   }
 
   getStates(): void {
-    this.todoService.getStates()
-      .subscribe(states => {
-        this.states = states;
-        console.log(states);
-      });
+    this.subscriptions.push(
+      this.todoService.getStates()
+        .subscribe(states => {
+          this.states = states;
+        })
+    );
   }
    
   goBack(): void {
@@ -79,7 +88,8 @@ export class TodoUpdateComponent {
     this.todo = this.todoForm.value;
     if (this.todo) {
       this.todoService.updateTodo(this.todo, Number(this.route.snapshot.paramMap.get('id')))
-        .subscribe();
+      .subscribe(response =>
+        console.log(response));
     }
   }
   

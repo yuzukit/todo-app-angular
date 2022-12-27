@@ -3,8 +3,7 @@ import { MessageService } from '../message.service';
 import { ValueCreateCategory } from '../models/category';
 import { ViewValueTodo } from '../models/todo';
 import { TodoService } from '../todo.service';
-
-// import { HttpClient } from '@angular/common/http';
+import { HasSubscription } from '../models/hasSubscription';
 
 @Component({
   selector: 'app-todo-list',
@@ -12,25 +11,35 @@ import { TodoService } from '../todo.service';
   styleUrls: ['./todo-list.component.scss']
 })
 
-export class TodoListComponent implements OnInit {
-  todos: ViewValueTodo[] = [];
+export class TodoListComponent extends HasSubscription implements OnInit {
+  todos:         ViewValueTodo[] = [];
   selectedTodo?: ViewValueTodo;
 
-  constructor(private todoService: TodoService) {}
+  constructor(private todoService: TodoService) {
+    super();
+  }
 
   getTodos(): void {
-    this.todoService.getTodos()
-        .subscribe(todo => {
-          this.todos = todo;
-        });
+    this.subscriptions.push(
+      this.todoService.getTodos()
+          .subscribe(todo => {
+            this.todos = todo;
+          })
+    );
   }
 
   ngOnInit(): void {
     this.getTodos();
   }
 
+  ngOnDestroy(): void {
+    this.onDestroy();
+  }
+
   deleteTodo(todo: ViewValueTodo): void {
-    this.todos = this.todos.filter(t => t !== todo);
-    this.todoService.deleteTodo(todo.id).subscribe();
+    this.subscriptions.push(
+      this.todoService.deleteTodo(todo.id).subscribe(response =>
+        console.log(response))
+    );
   }
 }
