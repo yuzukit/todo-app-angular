@@ -6,7 +6,6 @@ import { TodoService } from '../todo.service';
 import { ViewValueCategory } from '../models/category';
 import { Validators } from '@angular/forms';
 import { ValueCreateTodo } from '../models/todo';
-import { OverlayKeyboardDispatcher } from '@angular/cdk/overlay';
 import { HasSubscription } from '../models/hasSubscription';
 
 @Component({

@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Color, ValueCreateCategory, ViewValueCategory } from './models/category';
 import { Base } from './models/base';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -47,14 +48,16 @@ export class CategoryService extends Base {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { 
+    private messageService: MessageService,
+    private router: Router
+    ) { 
       super();
     }
 
   add(body: ValueCreateCategory): Observable<ValueCreateCategory> {
     return this.http.post<ValueCreateCategory>(`${this.baseUrl}/category/save`, JSON.stringify(body), this.httpOptions)
     .pipe(
-      tap(_ => window.location.href = 'http://localhost:4200/category/list'),
+      tap(_ => window.location.reload()),
       catchError(this.handleError<ValueCreateCategory>('addCategory', body))
     );
   }
@@ -64,7 +67,7 @@ export class CategoryService extends Base {
     .pipe(
       tap(_ => {
         this.log(`deleted category id=${id}`);
-        window.location.href = 'http://localhost:4200/category/list';
+        window.location.reload();
       }),
       catchError(this.handleError<ViewValueCategory>('deleteCategory'))
     );
@@ -75,7 +78,7 @@ export class CategoryService extends Base {
     .pipe(
       tap(_ => {
         this.log(`updated category id=${id}`);
-        window.location.href = 'http://localhost:4200/category/list';
+        this.router.navigate(['/category/list']);
       }),
       catchError(this.handleError<ValueCreateCategory>('updateCategory'))
     )

@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ValueCreateTodo, ViewValueTodo, States } from './models/todo';
 import { FormGroup } from '@angular/forms';
 import { Base } from './models/base';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -48,14 +49,16 @@ export class TodoService extends Base {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { 
+    private messageService: MessageService,
+    private router: Router
+    ) { 
       super();
     }
 
   add(body: ValueCreateTodo): Observable<ValueCreateTodo> {
     return this.http.post<ValueCreateTodo>(`${this.baseUrl}/todo/save`, JSON.stringify(body), this.httpOptions)
     .pipe(
-      tap(_ => window.location.href = 'http://localhost:4200/todo/list'),
+      tap(_ => window.location.reload()),
       catchError(this.handleError<ValueCreateTodo>('addTodo', body))
     );
   }
@@ -65,7 +68,7 @@ export class TodoService extends Base {
     .pipe(
       tap(_ => {
         this.log(`deleted todo id=${id}`);
-        window.location.href = 'http://localhost:4200/todo/list';
+        window.location.reload();
       }),
       catchError(this.handleError<ViewValueTodo>('deleteTodo'))
     );
@@ -76,7 +79,7 @@ export class TodoService extends Base {
     .pipe(
       tap(_ => {
         this.log(`updated todo id=${id}`);
-        window.location.href = 'http://localhost:4200/todo/list';
+        this.router.navigate(['/todo/list'])
       }),
       catchError(this.handleError<ValueCreateTodo>('updateTodo'))
     )
