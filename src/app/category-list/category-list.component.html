@@ -1,12 +1,18 @@
 <h2>Category List</h2>
 
 <div>
-    <ul class="todos">
+    <ul class="categories">
         <li *ngFor="let category of categories">
-        <!-- <a routerLink="/detail/{{hero.id}}"> -->
-            <span class="badge">{{category.name}}</span> {{category.slug}}
-        <!-- </a> -->
-        <!-- <button type="button" class="delete" title="delete todo" (click)="delete(hero)">x</button> -->
+            <mat-card>
+                <mat-card-header>{{category.name}}</mat-card-header>
+                <mat-card-content>{{category.slug}}, {{category.color}}</mat-card-content>
+                <button type="button" class="delete" title="delete category" (click)="deleteCategory(category)">x</button>
+                <a href="/category/edit/{{category.id}}">
+                    <button type="button" class="update" title="update category">編集</button>
+                </a>
+            </mat-card>
         </li>
     </ul>
 </div>
+
+<app-category-create></app-category-create>

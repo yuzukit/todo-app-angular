@@ -8,5 +8,10 @@ export interface ViewValueCategory { // 表示する内容
 export interface ValueCreateCategory { // Todoの登録や更新の内容
     name:  string,
     slug:  string,
-    color: string
+    color: number
+}
+
+export interface Color {
+    id:   number,
+    name: string
 }

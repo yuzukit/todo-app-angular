@@ -16,7 +16,7 @@ export class TodoService extends Base {
   getStates(): Observable<States[]> {
     return this.http.get<States[]>(`${this.baseUrl}/todo/state`)
       .pipe(
-        tap(states => this.log('fetched states')),
+        tap(_ => this.log('fetched states')),
         catchError(this.handleError<States[]>('getStates', []))
       );
   }

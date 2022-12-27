@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { ViewValueCategory } from './models/category';
+import { Color, ValueCreateCategory, ViewValueCategory } from './models/category';
 import { Base } from './models/base';
 
 @Injectable({
@@ -21,6 +21,22 @@ export class CategoryService extends Base {
       );
   }
 
+  getCategory(id: number): Observable<ValueCreateCategory> {
+    return this.http.get<ValueCreateCategory>(`${this.baseUrl}/category/list/json/${id}`, this.httpOptions)
+    .pipe(
+      tap(_ => this.log('fetched category')),
+      catchError(this.handleError<ValueCreateCategory>('getCategory'))
+    )
+  }
+
+  getColors(): Observable<Color[]> {
+    return this.http.get<Color[]>(`${this.baseUrl}/category/color`)
+    .pipe(
+      tap(_ => this.log('fetched colors')),
+      catchError(this.handleError<Color[]>('getColors', []))
+    )
+  }
+
   private log(message: string) {
     this.messageService.add(`CategoryService: ${message}`);
   }
@@ -35,4 +51,33 @@ export class CategoryService extends Base {
       super();
     }
 
+  add(body: ValueCreateCategory): Observable<ValueCreateCategory> {
+    return this.http.post<ValueCreateCategory>(`${this.baseUrl}/category/save`, JSON.stringify(body), this.httpOptions)
+    .pipe(
+      tap(_ => window.location.href = 'http://localhost:4200/category/list'),
+      catchError(this.handleError<ValueCreateCategory>('addCategory', body))
+    );
+  }
+
+  deleteCategory(id: number): Observable<ViewValueCategory> {
+    return this.http.delete<ViewValueCategory>(`${this.baseUrl}/category/delete/${id}`)
+    .pipe(
+      tap(_ => {
+        this.log(`deleted category id=${id}`);
+        window.location.href = 'http://localhost:4200/category/list';
+      }),
+      catchError(this.handleError<ViewValueCategory>('deleteCategory'))
+    );
+  }
+  
+  updateCategory(body: ValueCreateCategory, id: number): Observable<ValueCreateCategory> {
+    return this.http.put<ValueCreateCategory>(`${this.baseUrl}/category/update/${id}`, body, this.httpOptions)
+    .pipe(
+      tap(_ => {
+        this.log(`updated category id=${id}`);
+        window.location.href = 'http://localhost:4200/category/list';
+      }),
+      catchError(this.handleError<ValueCreateCategory>('updateCategory'))
+    )
+  }
 }
