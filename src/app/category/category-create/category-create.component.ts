@@ -21,7 +21,7 @@ export class CategoryCreateComponent extends HasSubscription implements OnInit {
     super();
     this.categoryForm = new FormGroup({
       name:  new FormControl(null, Validators.required),
-      slug:  new FormControl(null, Validators.required),
+      slug:  new FormControl(null, [Validators.required, Validators.pattern("^[0-9a-zA-Z]+")]),
       color: new FormControl(null, Validators.required)
     });
     this.category = this.categoryForm.value;
