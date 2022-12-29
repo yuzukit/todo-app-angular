@@ -1,0 +1,25 @@
+<form [formGroup]="todoForm" (ngSubmit)="addTodo()">
+    <div class="add-form">
+    <mat-form-field appearance="fill">
+        <mat-label>タイトル</mat-label>
+        <input matInput formControlName="title">
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+        <mat-label>内容</mat-label>
+        <textarea matInput formControlName="body"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>カテゴリ</mat-label>
+        <mat-select formControlName="category_id">
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    </div>
+    <button mat-raised-button type="submit">追加</button>
+</form>
+
+  
